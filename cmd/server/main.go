@@ -15,6 +15,8 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
+var release string
+
 func main() {
 	os.Exit(start())
 }
@@ -30,6 +32,8 @@ func start() int {
 	defer func() {
 		_ = log.Sync()
 	}()
+
+	log = log.With(zap.String("release", release))
 
 	host := getStringOrDefault("HOST", "localhost")
 	port := getIntOrDefault("PORT", 8080)
